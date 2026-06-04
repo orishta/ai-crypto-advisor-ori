@@ -1,0 +1,15 @@
+Let's fix 3 critical bugs right now to prepare for deployment:
+
+Meme State Reset Fix: Inside Dashboard.jsx (or wherever the reset preferences button is handled), when the user resets their preferences, ensure you also clear the stored votes from localStorage so everything starts completely fresh.
+
+Live Meme API (No more broken links): Update the backend main.py endpoint GET /api/crypto/meme to fetch live memes from Imgflip's free public API instead of hardcoded links. Use requests.get("https://api.imgflip.com/get_memes") and pick a random meme object from response.json()['data']['memes'], returning its url.
+
+Fix the Ugly Design (True Nordic Modernism): Completely replace the matrix/hacker black-and-green theme. It looks unprofessional. Transform it into a premium, soft Nordic interface (inspired by Notion and Linear):
+
+Backgrounds: Light mode stays crisp white. Dark mode canvas should use a rich, deep graphite gray/blue like bg-slate-900 (cards) and bg-slate-950 (page body) instead of flat pitch black.
+
+Typography: Dark mode text must be a readable off-white like text-slate-200 (primary) and text-slate-400 (secondary).
+
+Accent Color: Replace the aggressive emerald green completely with a sophisticated, professional Indigo (bg-indigo-600 / text-indigo-600 for light, bg-indigo-400 / text-indigo-400 for dark). This should apply to selected chips, active buttons, and loading dots.
+
+Borders: Use very subtle dividers (border-slate-200 in light, border-slate-800 in dark)
