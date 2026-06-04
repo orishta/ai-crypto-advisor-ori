@@ -5,6 +5,14 @@ import { useTheme } from '../hooks/useTheme'
 import client from '../api/client'
 import { ThemeToggle } from '../components/ui'
 
+function extractError(err, fallback) {
+  const detail = err.response?.data?.detail
+  if (Array.isArray(detail)) {
+    return detail.map(d => d.msg?.replace(/^Value error,\s*/i, '')).join(' · ')
+  }
+  return typeof detail === 'string' ? detail : fallback
+}
+
 export default function RegisterPage() {
   const { login }              = useAuth()
   const navigate               = useNavigate()
@@ -26,7 +34,7 @@ export default function RegisterPage() {
       login(data.access_token, data.user)
       navigate('/onboarding', { replace: true })
     } catch (err) {
-      setError(err.response?.data?.detail || 'Registration failed. Please try again.')
+      setError(extractError(err, 'Registration failed. Please try again.'))
     } finally {
       setSubmitting(false)
     }
