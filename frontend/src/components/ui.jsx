@@ -1,14 +1,92 @@
-export function Card({ title, actions, children }) {
+const DEFAULT_CARD_BG = 'bg-white dark:bg-slate-900 shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.4)]'
+
+export function Card({ title, actions, children, bg = DEFAULT_CARD_BG, handle, onToggleSize, isFullWidth, onToggleCollapse, isCollapsed }) {
   return (
-    <div className="flex flex-col gap-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
-      <div className="flex items-center justify-between min-h-[1.25rem]">
-        <h2 className="text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-slate-400 dark:text-slate-500">
+    <div className={`flex flex-col rounded-3xl ${bg} p-6 ${isCollapsed ? 'gap-0' : 'gap-5'}`}>
+      <div className="flex items-center gap-2 min-h-[1.25rem]">
+        {handle}
+        <h2 className="flex-1 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500">
           {title}
         </h2>
-        {actions}
+        <div className="flex items-center gap-0.5">
+          {!isCollapsed && onToggleSize && (
+            <button
+              onClick={onToggleSize}
+              aria-label={isFullWidth ? 'Shrink card' : 'Expand card'}
+              className="p-1 rounded-md text-slate-300 dark:text-slate-600
+                         hover:text-slate-500 dark:hover:text-slate-400
+                         hover:bg-slate-100 dark:hover:bg-slate-800
+                         transition-colors duration-150"
+            >
+              {isFullWidth ? <ShrinkIcon /> : <ExpandIcon />}
+            </button>
+          )}
+          {!isCollapsed && actions}
+          {onToggleCollapse && (
+            <button
+              onClick={onToggleCollapse}
+              aria-label={isCollapsed ? 'Expand card' : 'Collapse card'}
+              className="p-1 rounded-md text-slate-300 dark:text-slate-600
+                         hover:text-slate-500 dark:hover:text-slate-400
+                         hover:bg-slate-100 dark:hover:bg-slate-800
+                         transition-colors duration-150"
+            >
+              <ChevronIcon isCollapsed={isCollapsed} />
+            </button>
+          )}
+        </div>
       </div>
-      <div>{children}</div>
+      {!isCollapsed && <div>{children}</div>}
     </div>
+  )
+}
+
+function ChevronIcon({ isCollapsed }) {
+  return (
+    <svg viewBox="0 0 16 16" className={`w-3.5 h-3.5 transition-transform duration-200 ${isCollapsed ? '-rotate-90' : ''}`}
+      fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M4 6l4 4 4-4" />
+    </svg>
+  )
+}
+
+export function GripHandle(props) {
+  return (
+    <div
+      {...props}
+      className="p-1 rounded-md cursor-grab active:cursor-grabbing shrink-0
+                 text-slate-300 dark:text-slate-600
+                 hover:text-slate-400 dark:hover:text-slate-500
+                 hover:bg-slate-100 dark:hover:bg-slate-800
+                 transition-colors duration-150"
+    >
+      <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="currentColor">
+        <circle cx="5"  cy="3.5" r="1.2" />
+        <circle cx="11" cy="3.5" r="1.2" />
+        <circle cx="5"  cy="8"   r="1.2" />
+        <circle cx="11" cy="8"   r="1.2" />
+        <circle cx="5"  cy="12.5" r="1.2" />
+        <circle cx="11" cy="12.5" r="1.2" />
+      </svg>
+    </div>
+  )
+}
+
+function ExpandIcon() {
+  return (
+    <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="none"
+      stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M6 2H2v4M10 2h4v4M6 14H2v-4M10 14h4v-4" />
+    </svg>
+  )
+}
+
+function ShrinkIcon() {
+  return (
+    <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="none"
+      stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2 6h4V2M14 6h-4V2M2 10h4v4M14 10h-4v4" />
+    </svg>
   )
 }
 
@@ -18,14 +96,14 @@ export function ThumbsVote({ vote, onVote }) {
       <VoteButton
         label="Helpful"
         active={vote === 'up'}
-        activeClass="text-indigo-500 dark:text-indigo-400 bg-indigo-500/10 dark:bg-indigo-400/15 border border-indigo-500/25"
+        activeClass="text-indigo-600 dark:text-indigo-400 bg-indigo-100 dark:bg-indigo-500/20 border border-indigo-200 dark:border-indigo-500/30 shadow-sm"
         onClick={() => onVote('up')}
         icon={<ThumbUpIcon />}
       />
       <VoteButton
         label="Not helpful"
         active={vote === 'down'}
-        activeClass="text-red-500 bg-red-500/10 dark:bg-red-500/15 border border-red-500/25"
+        activeClass="text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-500/20 border border-red-200 dark:border-red-500/30 shadow-sm"
         onClick={() => onVote('down')}
         icon={<ThumbDownIcon />}
       />
@@ -42,7 +120,7 @@ function VoteButton({ label, active, activeClass, onClick, icon }) {
       className={`p-1.5 rounded-lg border transition-all duration-150
         ${active
           ? activeClass
-          : 'border-transparent text-slate-400 dark:text-slate-600 hover:text-slate-600 dark:hover:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+          : 'border-transparent text-slate-400 dark:text-slate-600 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
         }`}
     >
       {icon}
@@ -77,10 +155,10 @@ export function ThemeToggle({ isDark, onToggle }) {
     <button
       onClick={onToggle}
       aria-label="Toggle colour theme"
-      className="px-3 py-1.5 text-xs font-medium tracking-wide rounded-lg border
-                 border-slate-200 dark:border-slate-700
-                 text-slate-500 dark:text-slate-400
-                 hover:bg-slate-50 dark:hover:bg-slate-800
+      className="px-3 py-1.5 text-xs font-semibold tracking-wide rounded-xl
+                 bg-slate-100 dark:bg-slate-800
+                 text-slate-600 dark:text-slate-300
+                 hover:bg-slate-200 dark:hover:bg-slate-700
                  transition-colors duration-200"
     >
       {isDark ? '☀  Light' : '☾  Dark'}

@@ -41,5 +41,12 @@ def upsert_vote(
         )
         db.execute(stmt)
 
+        if body.content_type == "meme" and body.value == "up" and body.category:
+            prefs = dict(current_user.preferences or {})
+            counters = dict(prefs.get("liked_meme_categories", {}))
+            counters[body.category] = counters.get(body.category, 0) + 1
+            prefs["liked_meme_categories"] = counters
+            current_user.preferences = prefs
+
     db.commit()
     return {"status": "ok"}

@@ -43,6 +43,7 @@ class VoteRequest(BaseModel):
     content_type: Literal["insight", "meme"]
     content_key:  str
     value:        Literal["up", "down"] | None
+    category:     str | None = None
 
 
 class VoteOut(BaseModel):
