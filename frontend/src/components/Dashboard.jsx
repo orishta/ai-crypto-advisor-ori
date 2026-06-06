@@ -163,7 +163,7 @@ export default function Dashboard({ isDark, onToggleTheme, prefs, userName, vote
 
     if (id === 'prices')  return <CoinPricesCard {...shared} />
     if (id === 'news')    return <MarketNewsCard  {...shared} coins={prefs?.coins} />
-    if (id === 'insight') return <AIInsightCard   {...shared} />
+    if (id === 'insight') return <AIInsightCard   {...shared} votesMap={votesMap} />
     if (id === 'meme')    return <CryptoMemeCard  {...shared} votesMap={votesMap} />
     return null
   }
