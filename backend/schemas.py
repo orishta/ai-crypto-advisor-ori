@@ -39,6 +39,18 @@ class PreferencesUpdate(BaseModel):
     preferences: dict
 
 
+class PasswordResetRequest(BaseModel):
+    email:        EmailStr
+    new_password: str
+
+    @field_validator("new_password")
+    @classmethod
+    def min_length(cls, v: str) -> str:
+        if len(v) < 8:
+            raise ValueError("Password must be at least 8 characters")
+        return v
+
+
 class VoteRequest(BaseModel):
     content_type: Literal["insight", "meme"]
     content_key:  str

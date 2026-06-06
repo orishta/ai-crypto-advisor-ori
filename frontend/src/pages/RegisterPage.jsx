@@ -22,7 +22,10 @@ export default function RegisterPage() {
   const [submitting, setSubmitting] = useState(false)
 
   function set(field) {
-    return v => setForm(prev => ({ ...prev, [field]: v }))
+    return v => {
+      setError('')
+      setForm(prev => ({ ...prev, [field]: v }))
+    }
   }
 
   async function handleSubmit(e) {

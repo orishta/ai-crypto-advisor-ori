@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useMemeFetch } from '../hooks/useMemeFetch'
 import { useVoting } from '../hooks/useVoting'
-import { Card, ThumbsVote, CategoryBadge, ErrorNote } from './ui'
+import { Card, ThumbsVote, ErrorNote } from './ui'
 
 function buildMemeVoteKey(memeName) {
   return `meme_${memeName.toLowerCase().replace(/\W+/g, '_').slice(0, 40)}`
@@ -110,12 +110,9 @@ export default function CryptoMemeCard({ votesMap = {}, bg, handle, onToggleSize
     >
       <MemeImageContainer meme={meme} isLoading={isLoading} fetchError={fetchError} />
       {meme && (
-        <div className="flex items-start justify-between gap-3 pt-1">
-          <p className="text-sm font-medium text-slate-700 dark:text-slate-200 leading-snug line-clamp-2 flex-1">
-            {meme.name}
-          </p>
-          <CategoryBadge category={meme.category} />
-        </div>
+        <p className="pt-1 text-sm font-medium text-slate-700 dark:text-slate-200 leading-snug line-clamp-2">
+          {meme.name}
+        </p>
       )}
     </Card>
   )

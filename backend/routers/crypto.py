@@ -24,12 +24,12 @@ _REDDIT_MEME_URL  = "https://meme-api.com/gimme/{subreddit}"
 _REDDIT_SUBREDDITS = [
     "cryptocurrencymemes",
     "bitcoinmemes",
-    "Bitcoin",
+    "CryptoMemes",
     "dogecoin",
-    "CryptoCurrency",
     "SatoshiStreetBets",
     "ethtrader",
-    "CryptoMemes",
+    "Bitcoin",
+    "CryptoCurrency",
 ]
 
 _COIN_FIELDS = {"id", "symbol", "name", "current_price", "image", "price_change_percentage_24h"}
@@ -180,22 +180,11 @@ def get_crypto_news(tickers: str = Query(default="")):
     return _fetch_crypto_news(tickers)
 
 
-@router.get("/meme")
-def get_random_meme():
-    subreddit = random.choice(_REDDIT_SUBREDDITS)
-    try:
-        resp = requests.get(
-            _REDDIT_MEME_URL.format(subreddit=subreddit),
-            timeout=10,
-        )
-    except requests.Timeout:
-        raise HTTPException(status_code=504, detail="Reddit meme API timed out")
-
-    if resp.status_code != 200:
-        raise HTTPException(status_code=502, detail=f"Reddit meme API returned {resp.status_code}")
-
-    data  = resp.json()
-    title = data.get("title", "Crypto meme")
+def _extract_meme(data: dict) -> dict | None:
+    """Return a meme dict from raw meme-api response, or None if unusable."""
+    title = (data.get("title") or "").strip()
+    if not title:
+        return None
 
     raw_url = data.get("url")
     url_is_video = data.get("isVideo") or (raw_url and raw_url.endswith(".mp4"))
@@ -206,10 +195,41 @@ def get_random_meme():
         url = raw_url
 
     if not url:
-        raise HTTPException(status_code=502, detail="No image URL in meme response")
+        return None
 
-    return {
-        "url":      url,
-        "name":     title,
-        "category": _categorize_meme(title),
-    }
+    return {"url": url, "name": title, "category": _categorize_meme(title)}
+
+
+@router.get("/meme")
+def get_random_meme():
+    last_error: str = "Reddit meme API unavailable"
+
+    # Try up to 4 times; prefer a non-general meme but accept one if needed
+    best_general: dict | None = None
+    subreddits = random.sample(_REDDIT_SUBREDDITS, min(4, len(_REDDIT_SUBREDDITS)))
+
+    for subreddit in subreddits:
+        try:
+            resp = requests.get(_REDDIT_MEME_URL.format(subreddit=subreddit), timeout=10)
+        except requests.Timeout:
+            last_error = "Reddit meme API timed out"
+            continue
+
+        if resp.status_code != 200:
+            last_error = f"Reddit meme API returned {resp.status_code}"
+            continue
+
+        meme = _extract_meme(resp.json())
+        if not meme:
+            continue
+
+        if meme["category"] != "general":
+            return meme
+
+        if best_general is None:
+            best_general = meme
+
+    if best_general:
+        return best_general
+
+    raise HTTPException(status_code=502, detail=last_error)
