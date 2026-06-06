@@ -51,7 +51,7 @@ flowchart TD
         RedditMeme["meme-api.com\n(crypto subreddits)"]
     end
 
-    subgraph DB["Database — SQLite"]
+    subgraph DB["Database — Neon (PostgreSQL)"]
         VotesTable["votes\n(content_type · content_key · value · category)"]
     end
 
@@ -65,3 +65,16 @@ flowchart TD
     CryptoRouter --> RedditMeme
     VotesRouter --> VotesTable
 ```
+
+## Deployment
+
+| Layer | Service | Why |
+|-------|---------|-----|
+| Frontend | Vercel | Global CDN, native Vite/React build, deploys on every push |
+| Backend | Railway | Straightforward FastAPI/Python hosting, free tier, env vars injected securely |
+| Database | Neon.tech | Serverless PostgreSQL, free tier without credit card, zero idle cost |
+
+Environment variables set at the platform level (never in the repo):
+- `DATABASE_URL` — Neon PostgreSQL connection string (set in Railway)
+- `OPENROUTER_API_KEY` — AI provider key (set in Railway)
+- `VITE_API_URL` — Railway backend URL (set in Vercel)
