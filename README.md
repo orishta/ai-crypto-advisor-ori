@@ -1,5 +1,6 @@
 # ai-crypto-advisor-ori
-
+### About the Project
+The AI Crypto Advisor is a comprehensive web-based platform designed to empower cryptocurrency users with actionable data and intelligent insights. By integrating real-time market data with advanced AI-driven analysis, the application provides users with a personalized dashboard featuring live coin prices, market news, and curated AI insights. The platform also includes an interactive onboarding quiz to tailor the experience to individual user profiles, ensuring that crypto enthusiastsfrom beginners to experienced traders—receive the most relevant information and decision-support tools.
 ## AI Use Declaration
 
 I used Claude (Anthropic) as a coding assistant during this project. This section describes honestly how I used it and where the thinking was mine.
