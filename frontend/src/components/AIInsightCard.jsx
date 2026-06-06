@@ -1,12 +1,9 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import client from '../api/client'
+import { useVoting } from '../hooks/useVoting'
 import { Card, ThumbsVote, SkeletonParagraph, ErrorNote } from './ui'
 
 const CACHE_KEY = 'cached_insight'
-
-function insightVoteKey(text) {
-  return `insight_${text.replace(/\s+/g, '').slice(0, 24)}`
-}
 
 function loadCachedInsight() {
   try {
@@ -39,8 +36,17 @@ export default function AIInsightCard({ votesMap = {}, bg, handle, onToggleSize,
   const [insight, setInsight] = useState(loadCachedInsight)
   const [loading, setLoading] = useState(() => loadCachedInsight() === null)
   const [error, setError]     = useState(null)
-  const [vote, setVote]       = useState(null)
-  const initializedRef        = useRef(false)
+
+  const insightVoteKey = insight
+    ? `insight_${insight.slice(0, 40).replace(/\W+/g, '_')}`
+    : ''
+
+  const { vote, castVote } = useVoting({
+    contentType: 'insight',
+    contentKey:  insightVoteKey,
+    category:    'ai_insight',
+    initialVote: insightVoteKey ? (votesMap[insightVoteKey] ?? null) : null,
+  })
 
   function fetchInsight() {
     setLoading(true)
@@ -58,21 +64,6 @@ export default function AIInsightCard({ votesMap = {}, bg, handle, onToggleSize,
     if (insight === null) fetchInsight()
   }, [])
 
-  useEffect(() => {
-    if (!insight || initializedRef.current) return
-    initializedRef.current = true
-    setVote(votesMap[insightVoteKey(insight)] ?? null)
-  }, [insight, votesMap])
-
-  function handleVote(v) {
-    if (!insight) return
-    const key  = insightVoteKey(insight)
-    const next = vote === v ? null : v
-    setVote(next)
-    client.post('/votes', { content_type: 'insight', content_key: key, value: next })
-      .catch(() => setVote(vote))
-  }
-
   return (
     <Card
       title="AI Insight"
@@ -82,7 +73,7 @@ export default function AIInsightCard({ votesMap = {}, bg, handle, onToggleSize,
       isFullWidth={isFullWidth}
       onToggleCollapse={onToggleCollapse}
       isCollapsed={isCollapsed}
-      actions={<ThumbsVote vote={vote} onVote={handleVote} />}
+      actions={<ThumbsVote vote={vote} onVote={castVote} />}
     >
       {loading && <SkeletonParagraph />}
       {error && (

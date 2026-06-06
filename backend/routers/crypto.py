@@ -197,11 +197,13 @@ def get_random_meme():
     data  = resp.json()
     title = data.get("title", "Crypto meme")
 
-    if data.get("isVideo"):
+    raw_url = data.get("url")
+    url_is_video = data.get("isVideo") or (raw_url and raw_url.endswith(".mp4"))
+    if url_is_video:
         previews = data.get("preview", [])
         url = previews[-1] if previews else None
     else:
-        url = data.get("url")
+        url = raw_url
 
     if not url:
         raise HTTPException(status_code=502, detail="No image URL in meme response")

@@ -1,36 +1,28 @@
 const DEFAULT_CARD_BG = 'bg-white dark:bg-slate-900 shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.4)]'
 
+const CARD_CONTROL_BTN = `p-1 rounded-md
+  text-slate-400 dark:text-slate-500
+  hover:text-indigo-600 dark:hover:text-indigo-400
+  hover:bg-indigo-50 dark:hover:bg-indigo-950/30
+  transition-colors duration-150`
+
 export function Card({ title, actions, children, bg = DEFAULT_CARD_BG, handle, onToggleSize, isFullWidth, onToggleCollapse, isCollapsed }) {
   return (
     <div className={`flex flex-col rounded-3xl ${bg} p-6 ${isCollapsed ? 'gap-0' : 'gap-5'}`}>
       <div className="flex items-center gap-2 min-h-[1.25rem]">
         {handle}
-        <h2 className="flex-1 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-slate-400 dark:text-slate-500">
+        <h2 className="flex-1 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
           {title}
         </h2>
         <div className="flex items-center gap-0.5">
           {!isCollapsed && onToggleSize && (
-            <button
-              onClick={onToggleSize}
-              aria-label={isFullWidth ? 'Shrink card' : 'Expand card'}
-              className="p-1 rounded-md text-slate-300 dark:text-slate-600
-                         hover:text-slate-500 dark:hover:text-slate-400
-                         hover:bg-slate-100 dark:hover:bg-slate-800
-                         transition-colors duration-150"
-            >
+            <button onClick={onToggleSize} aria-label={isFullWidth ? 'Shrink card' : 'Expand card'} className={CARD_CONTROL_BTN}>
               {isFullWidth ? <ShrinkIcon /> : <ExpandIcon />}
             </button>
           )}
           {!isCollapsed && actions}
           {onToggleCollapse && (
-            <button
-              onClick={onToggleCollapse}
-              aria-label={isCollapsed ? 'Expand card' : 'Collapse card'}
-              className="p-1 rounded-md text-slate-300 dark:text-slate-600
-                         hover:text-slate-500 dark:hover:text-slate-400
-                         hover:bg-slate-100 dark:hover:bg-slate-800
-                         transition-colors duration-150"
-            >
+            <button onClick={onToggleCollapse} aria-label={isCollapsed ? 'Expand card' : 'Collapse card'} className={CARD_CONTROL_BTN}>
               <ChevronIcon isCollapsed={isCollapsed} />
             </button>
           )}
@@ -56,15 +48,15 @@ export function GripHandle(props) {
       {...props}
       className="p-1 rounded-md cursor-grab active:cursor-grabbing shrink-0
                  text-slate-300 dark:text-slate-600
-                 hover:text-slate-400 dark:hover:text-slate-500
-                 hover:bg-slate-100 dark:hover:bg-slate-800
+                 hover:text-indigo-500 dark:hover:text-indigo-400
+                 hover:bg-indigo-50 dark:hover:bg-indigo-950/30
                  transition-colors duration-150"
     >
       <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="currentColor">
-        <circle cx="5"  cy="3.5" r="1.2" />
-        <circle cx="11" cy="3.5" r="1.2" />
-        <circle cx="5"  cy="8"   r="1.2" />
-        <circle cx="11" cy="8"   r="1.2" />
+        <circle cx="5"  cy="3.5"  r="1.2" />
+        <circle cx="11" cy="3.5"  r="1.2" />
+        <circle cx="5"  cy="8"    r="1.2" />
+        <circle cx="11" cy="8"    r="1.2" />
         <circle cx="5"  cy="12.5" r="1.2" />
         <circle cx="11" cy="12.5" r="1.2" />
       </svg>
@@ -120,7 +112,7 @@ function VoteButton({ label, active, activeClass, onClick, icon }) {
       className={`p-1.5 rounded-lg border transition-all duration-150
         ${active
           ? activeClass
-          : 'border-transparent text-slate-400 dark:text-slate-600 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
+          : 'border-transparent text-slate-400 dark:text-slate-600 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/30'
         }`}
     >
       {icon}
@@ -156,20 +148,44 @@ export function ThemeToggle({ isDark, onToggle }) {
       onClick={onToggle}
       aria-label="Toggle colour theme"
       className="px-3 py-1.5 text-xs font-semibold tracking-wide rounded-xl
-                 bg-slate-100 dark:bg-slate-800
-                 text-slate-600 dark:text-slate-300
-                 hover:bg-slate-200 dark:hover:bg-slate-700
-                 transition-colors duration-200"
+                 bg-gradient-to-r from-indigo-50 to-violet-50
+                 dark:from-slate-800 dark:to-slate-800
+                 text-indigo-600 dark:text-slate-300
+                 hover:from-indigo-100 hover:to-violet-100
+                 dark:hover:from-slate-700 dark:hover:to-slate-700
+                 transition-all duration-200"
     >
       {isDark ? '☀  Light' : '☾  Dark'}
     </button>
   )
 }
 
-export function SkeletonLine({ className = '' }) {
+const CATEGORY_BADGE_STYLES = {
+  bull_market:  'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400',
+  bear_market:  'bg-red-100    dark:bg-red-900/30     text-red-700    dark:text-red-400',
+  animal_coins: 'bg-amber-100  dark:bg-amber-900/30   text-amber-700  dark:text-amber-400',
+  general:      'bg-indigo-100 dark:bg-indigo-900/30  text-indigo-700 dark:text-indigo-400',
+}
+
+const CATEGORY_LABELS = {
+  bull_market:  'Bull Market',
+  bear_market:  'Bear Market',
+  animal_coins: 'Animal Coins',
+  general:      'General',
+}
+
+export function CategoryBadge({ category }) {
+  const styleClass = CATEGORY_BADGE_STYLES[category] ?? CATEGORY_BADGE_STYLES.general
+  const label      = CATEGORY_LABELS[category]        ?? 'General'
   return (
-    <div className={`h-3 rounded-full bg-slate-100 dark:bg-slate-800 animate-pulse ${className}`} />
+    <span className={`inline-block px-2 py-0.5 rounded-full text-[0.6rem] font-bold uppercase tracking-wider ${styleClass}`}>
+      {label}
+    </span>
   )
+}
+
+export function SkeletonLine({ className = '' }) {
+  return <div className={`h-3 rounded-full bg-slate-100 dark:bg-slate-800 animate-pulse ${className}`} />
 }
 
 export function SkeletonCoinList({ count = 8 }) {
@@ -213,7 +229,5 @@ export function SkeletonParagraph() {
 }
 
 export function ErrorNote({ children }) {
-  return (
-    <p className="text-xs text-red-500 dark:text-red-400 leading-relaxed">{children}</p>
-  )
+  return <p className="text-xs text-red-500 dark:text-red-400 leading-relaxed">{children}</p>
 }
