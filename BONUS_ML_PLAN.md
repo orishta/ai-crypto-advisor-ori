@@ -1,4 +1,4 @@
-# ML Bonus — Recommendation Engine Plan
+# ML Bonus 
 
 ## Why ML?
 
