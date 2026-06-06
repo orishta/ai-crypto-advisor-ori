@@ -24,29 +24,29 @@ import { ThemeToggle, GripHandle } from './ui'
 
 const THEMES = {
   pastel: {
-    pageBg:        'bg-gradient-to-br from-indigo-50/60 via-sky-50/40 to-violet-50/60 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900',
-    headerBg:      'bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-indigo-100/60 dark:border-slate-800',
+    pageBg:        'bg-slate-50 dark:bg-slate-950',
+    headerBg:      'bg-white/90 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/60',
     titleGradient: 'from-indigo-600 to-violet-600 dark:from-indigo-400 dark:to-violet-400',
     dotGradient:   'from-indigo-500 to-violet-600',
     dotShadow:     'shadow-indigo-400/40',
     cards: {
-      prices:  'bg-gradient-to-br from-indigo-50 to-blue-100/80 shadow-[0_8px_32px_rgba(99,102,241,0.18)] dark:from-slate-900 dark:to-indigo-900/50 dark:shadow-[0_8px_32px_rgba(99,102,241,0.22)]',
-      news:    'bg-gradient-to-br from-sky-50 to-cyan-100/80 shadow-[0_8px_32px_rgba(14,165,233,0.18)] dark:from-slate-900 dark:to-sky-900/50 dark:shadow-[0_8px_32px_rgba(14,165,233,0.22)]',
-      insight: 'bg-gradient-to-br from-violet-50 to-purple-100/80 shadow-[0_8px_32px_rgba(139,92,246,0.18)] dark:from-slate-900 dark:to-violet-900/50 dark:shadow-[0_8px_32px_rgba(139,92,246,0.22)]',
-      meme:    'bg-gradient-to-br from-emerald-50 to-teal-100/80 shadow-[0_8px_32px_rgba(16,185,129,0.18)] dark:from-slate-900 dark:to-emerald-900/50 dark:shadow-[0_8px_32px_rgba(16,185,129,0.22)]',
+      prices:  'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)]',
+      news:    'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)]',
+      insight: 'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)]',
+      meme:    'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)]',
     },
   },
   neon: {
     pageBg:        'bg-gray-950',
-    headerBg:      'bg-gray-900/95 border-b border-violet-900/50',
+    headerBg:      'bg-gray-950/95 backdrop-blur-md border-b border-slate-800/40',
     titleGradient: 'from-violet-400 to-cyan-400',
     dotGradient:   'from-violet-500 to-cyan-500',
     dotShadow:     'shadow-violet-400/50',
     cards: {
-      prices:  'bg-gray-900 border border-violet-500/40 shadow-[0_0_35px_rgba(139,92,246,0.35)]',
-      news:    'bg-gray-900 border border-cyan-400/40 shadow-[0_0_35px_rgba(34,211,238,0.35)]',
-      insight: 'bg-gray-900 border border-fuchsia-500/40 shadow-[0_0_35px_rgba(217,70,239,0.35)]',
-      meme:    'bg-gray-900 border border-emerald-400/40 shadow-[0_0_35px_rgba(52,211,153,0.35)]',
+      prices:  'bg-gray-900 border border-violet-500/20 shadow-[0_0_24px_rgba(139,92,246,0.12)]',
+      news:    'bg-gray-900 border border-cyan-400/20 shadow-[0_0_24px_rgba(34,211,238,0.12)]',
+      insight: 'bg-gray-900 border border-fuchsia-500/20 shadow-[0_0_24px_rgba(217,70,239,0.12)]',
+      meme:    'bg-gray-900 border border-emerald-400/20 shadow-[0_0_24px_rgba(52,211,153,0.12)]',
     },
   },
   mono: {
@@ -56,10 +56,10 @@ const THEMES = {
     dotGradient:   'from-gray-800 to-gray-600',
     dotShadow:     'shadow-gray-400/30',
     cards: {
-      prices:  'bg-white dark:bg-gray-900 border-2 border-gray-900 dark:border-gray-100 shadow-[5px_5px_0px_#111827] dark:shadow-[5px_5px_0px_rgba(255,255,255,0.85)]',
-      news:    'bg-white dark:bg-gray-900 border-2 border-gray-900 dark:border-gray-100 shadow-[5px_5px_0px_#111827] dark:shadow-[5px_5px_0px_rgba(255,255,255,0.85)]',
-      insight: 'bg-white dark:bg-gray-900 border-2 border-gray-900 dark:border-gray-100 shadow-[5px_5px_0px_#111827] dark:shadow-[5px_5px_0px_rgba(255,255,255,0.85)]',
-      meme:    'bg-white dark:bg-gray-900 border-2 border-gray-900 dark:border-gray-100 shadow-[5px_5px_0px_#111827] dark:shadow-[5px_5px_0px_rgba(255,255,255,0.85)]',
+      prices:  'bg-white dark:bg-gray-900 border-2 border-gray-900 dark:border-gray-100 shadow-[4px_4px_0_#111827] dark:shadow-[4px_4px_0_rgba(255,255,255,0.8)]',
+      news:    'bg-white dark:bg-gray-900 border-2 border-gray-900 dark:border-gray-100 shadow-[4px_4px_0_#111827] dark:shadow-[4px_4px_0_rgba(255,255,255,0.8)]',
+      insight: 'bg-white dark:bg-gray-900 border-2 border-gray-900 dark:border-gray-100 shadow-[4px_4px_0_#111827] dark:shadow-[4px_4px_0_rgba(255,255,255,0.8)]',
+      meme:    'bg-white dark:bg-gray-900 border-2 border-gray-900 dark:border-gray-100 shadow-[4px_4px_0_#111827] dark:shadow-[4px_4px_0_rgba(255,255,255,0.8)]',
     },
   },
 }
@@ -103,7 +103,6 @@ function loadColorTheme() {
 // ─── Dashboard ────────────────────────────────────────────────────────────────
 
 export default function Dashboard({ isDark, onToggleTheme, prefs, userName, votesMap, onResetPrefs, onLogout }) {
-  const backendStatus            = useBackendStatus()
   const [layout, setLayout]      = useState(loadLayout)
   const [colorTheme, setColorTheme] = useState(loadColorTheme)
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -229,9 +228,6 @@ export default function Dashboard({ isDark, onToggleTheme, prefs, userName, vote
         </DndContext>
       </main>
 
-      <footer className="flex items-center justify-end px-8 py-4 border-t border-slate-200/60 dark:border-slate-800/60">
-        <BackendStatus status={backendStatus} />
-      </footer>
     </div>
   )
 }
@@ -324,30 +320,6 @@ function GearIcon() {
   )
 }
 
-function useBackendStatus() {
-  const [status, setStatus] = useState('checking')
-  useEffect(() => {
-    client.get('/health')
-      .then(({ data }) => setStatus(data?.status === 'ok' ? 'connected' : 'disconnected'))
-      .catch(() => setStatus('disconnected'))
-  }, [])
-  return status
-}
-
-function BackendStatus({ status }) {
-  const dotClass = {
-    checking:     'bg-slate-300 dark:bg-slate-600 animate-pulse',
-    connected:    'bg-emerald-500 shadow-sm shadow-emerald-400/50',
-    disconnected: 'bg-red-500',
-  }[status]
-  const label = { checking: 'Checking…', connected: 'Connected', disconnected: 'Disconnected' }[status]
-  return (
-    <div className="flex items-center gap-2">
-      <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${dotClass}`} />
-      <span className="text-xs text-slate-400 dark:text-slate-500">Backend: {label}</span>
-    </div>
-  )
-}
 
 function PrefsChip({ prefs, onReset }) {
   return (

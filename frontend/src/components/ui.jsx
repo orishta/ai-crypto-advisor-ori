@@ -1,4 +1,4 @@
-const DEFAULT_CARD_BG = 'bg-white dark:bg-slate-900 shadow-[0_8px_30px_rgb(0,0,0,0.06)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.4)]'
+const DEFAULT_CARD_BG = 'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)]'
 
 const CARD_CONTROL_BTN = `p-1 rounded-md
   text-slate-400 dark:text-slate-500
@@ -8,7 +8,7 @@ const CARD_CONTROL_BTN = `p-1 rounded-md
 
 export function Card({ title, actions, children, bg = DEFAULT_CARD_BG, handle, onToggleSize, isFullWidth, onToggleCollapse, isCollapsed }) {
   return (
-    <div className={`flex flex-col rounded-3xl ${bg} p-6 ${isCollapsed ? 'gap-0' : 'gap-5'}`}>
+    <div className={`flex flex-col rounded-2xl ${bg} p-6 ${isCollapsed ? 'gap-0' : 'gap-5'}`}>
       <div className="flex items-center gap-2 min-h-[1.25rem]">
         {handle}
         <h2 className="flex-1 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
@@ -147,15 +147,14 @@ export function ThemeToggle({ isDark, onToggle }) {
     <button
       onClick={onToggle}
       aria-label="Toggle colour theme"
-      className="px-3 py-1.5 text-xs font-semibold tracking-wide rounded-xl
-                 bg-gradient-to-r from-indigo-50 to-violet-50
-                 dark:from-slate-800 dark:to-slate-800
-                 text-indigo-600 dark:text-slate-300
-                 hover:from-indigo-100 hover:to-violet-100
-                 dark:hover:from-slate-700 dark:hover:to-slate-700
-                 transition-all duration-200"
+      className="px-3 py-1.5 text-xs font-semibold rounded-lg
+                 border border-slate-200 dark:border-slate-700
+                 bg-white dark:bg-slate-800
+                 text-slate-600 dark:text-slate-300
+                 hover:bg-slate-50 dark:hover:bg-slate-700
+                 transition-colors duration-150"
     >
-      {isDark ? '☀  Light' : '☾  Dark'}
+      {isDark ? 'Light' : 'Dark'}
     </button>
   )
 }
