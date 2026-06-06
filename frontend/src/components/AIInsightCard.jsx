@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import client from '../api/client'
-import { useVoting } from '../hooks/useVoting'
-import { Card, ThumbsVote, SkeletonParagraph, ErrorNote } from './ui'
+import { Card, SkeletonParagraph, ErrorNote } from './ui'
 
 const CACHE_KEY = 'cached_insight'
 
@@ -32,21 +31,10 @@ function parseApiError(err) {
   return typeof detail === 'string' ? detail : 'Could not load insight — try again'
 }
 
-export default function AIInsightCard({ votesMap = {}, bg, handle, onToggleSize, isFullWidth, onToggleCollapse, isCollapsed }) {
+export default function AIInsightCard({ bg, handle, onToggleSize, isFullWidth, onToggleCollapse, isCollapsed }) {
   const [insight, setInsight] = useState(loadCachedInsight)
   const [loading, setLoading] = useState(() => loadCachedInsight() === null)
   const [error, setError]     = useState(null)
-
-  const insightVoteKey = insight
-    ? `insight_${insight.slice(0, 40).replace(/\W+/g, '_')}`
-    : ''
-
-  const { vote, castVote } = useVoting({
-    contentType: 'insight',
-    contentKey:  insightVoteKey,
-    category:    'ai_insight',
-    initialVote: insightVoteKey ? (votesMap[insightVoteKey] ?? null) : null,
-  })
 
   function fetchInsight() {
     setLoading(true)
@@ -73,7 +61,6 @@ export default function AIInsightCard({ votesMap = {}, bg, handle, onToggleSize,
       isFullWidth={isFullWidth}
       onToggleCollapse={onToggleCollapse}
       isCollapsed={isCollapsed}
-      actions={<ThumbsVote vote={vote} onVote={castVote} />}
     >
       {loading && <SkeletonParagraph />}
       {error && (

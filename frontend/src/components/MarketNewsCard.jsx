@@ -1,28 +1,13 @@
 import { useState, useEffect } from 'react'
 import client from '../api/client'
-import { useVoting } from '../hooks/useVoting'
-import { Card, ThumbsVote, SkeletonNewsList, ErrorNote } from './ui'
-
-function buildNewsVoteKey(newsTitle) {
-  return `news_${newsTitle.toLowerCase().replace(/\W+/g, '_').slice(0, 50)}`
-}
+import { Card, SkeletonNewsList, ErrorNote } from './ui'
 
 function NewsArticleRow({ article }) {
-  const voteKey = buildNewsVoteKey(article.title)
-  const { vote, castVote } = useVoting({
-    contentType: 'news',
-    contentKey:  voteKey,
-    category:    'market_news',
-  })
-
   return (
-    <li className="flex flex-col gap-1">
-      <div className="flex items-start justify-between gap-2">
-        <p className="text-sm font-medium text-slate-700 dark:text-slate-200 leading-snug flex-1">
-          {article.title}
-        </p>
-        <ThumbsVote vote={vote} onVote={castVote} />
-      </div>
+    <li className="flex flex-col gap-1 py-0.5">
+      <p className="text-sm font-medium text-slate-700 dark:text-slate-200 leading-snug">
+        {article.title}
+      </p>
       <p className="text-[0.65rem] text-slate-400 dark:text-slate-500">
         {article.source} · {article.date}
       </p>

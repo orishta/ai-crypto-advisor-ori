@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import client from '../api/client'
-import { useVoting } from '../hooks/useVoting'
-import { Card, ThumbsVote, SkeletonCoinList, ErrorNote } from './ui'
+import { Card, SkeletonCoinList, ErrorNote } from './ui'
 
 function useFavouriteCoins() {
   const [favouriteSymbols, setFavouriteSymbols] = useState(() => {
@@ -33,11 +32,6 @@ function PriceChangeIndicator({ percentageChange }) {
 
 function CoinRow({ coin, isFavourited, onToggleFavourite }) {
   const coinSymbol = coin.symbol?.toUpperCase()
-  const { vote, castVote } = useVoting({
-    contentType: 'coin_sentiment',
-    contentKey:  `coin_${coinSymbol}`,
-    category:    coinSymbol,
-  })
 
   return (
     <li
@@ -66,14 +60,11 @@ function CoinRow({ coin, isFavourited, onToggleFavourite }) {
           <span className="text-[0.65rem] font-medium uppercase text-slate-400 dark:text-slate-500">{coin.symbol}</span>
         </div>
       </div>
-      <div className="flex items-center gap-2 shrink-0">
-        <div className="text-right">
-          <p className="text-sm font-medium text-slate-900 dark:text-slate-200 tabular-nums">
-            ${coin.current_price?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-          </p>
-          <PriceChangeIndicator percentageChange={coin.price_change_percentage_24h} />
-        </div>
-        <ThumbsVote vote={vote} onVote={castVote} />
+      <div className="text-right shrink-0">
+        <p className="text-sm font-medium text-slate-900 dark:text-slate-200 tabular-nums">
+          ${coin.current_price?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+        </p>
+        <PriceChangeIndicator percentageChange={coin.price_change_percentage_24h} />
       </div>
     </li>
   )
@@ -88,7 +79,7 @@ export default function CoinPricesCard({ bg, handle, onToggleSize, isFullWidth, 
   useEffect(() => {
     client.get('/api/crypto/market')
       .then(({ data }) => setCoins(data))
-      .catch(() => setError('Could not load market data. Is the backend running?'))
+      .catch(() => setError('Could not load market data.'))
       .finally(() => setLoading(false))
   }, [])
 

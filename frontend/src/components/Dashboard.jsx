@@ -108,8 +108,17 @@ export default function Dashboard({ isDark, onToggleTheme, prefs, userName, vote
   const [settingsOpen, setSettingsOpen] = useState(false)
   const settingsRef              = useRef(null)
 
-  const theme        = THEMES[colorTheme] || THEMES.pastel
-  const allowedCards = new Set(CARDS_BY_CONTENT[prefs?.contentType] || CARDS_BY_CONTENT.All)
+  const theme = THEMES[colorTheme] || THEMES.pastel
+
+  // contentType may be a legacy string ("All","News"…) or the new string[]
+  const allowedCards = (() => {
+    const raw   = prefs?.contentType
+    const types = Array.isArray(raw) ? raw : (raw ? [raw] : ['News', 'Insights', 'Memes'])
+    const cards = new Set(['prices'])
+    types.forEach(t => (CARDS_BY_CONTENT[t] || []).forEach(id => cards.add(id)))
+    return cards
+  })()
+
   const visibleOrder = layout.order.filter(id => allowedCards.has(id))
   const sensors      = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }))
 
@@ -154,7 +163,7 @@ export default function Dashboard({ isDark, onToggleTheme, prefs, userName, vote
 
     if (id === 'prices')  return <CoinPricesCard {...shared} />
     if (id === 'news')    return <MarketNewsCard  {...shared} coins={prefs?.coins} />
-    if (id === 'insight') return <AIInsightCard   {...shared} votesMap={votesMap} />
+    if (id === 'insight') return <AIInsightCard   {...shared} />
     if (id === 'meme')    return <CryptoMemeCard  {...shared} votesMap={votesMap} />
     return null
   }
