@@ -24,16 +24,16 @@ import { ThemeToggle, GripHandle } from './ui'
 
 const THEMES = {
   pastel: {
-    pageBg:        'bg-slate-50 dark:bg-slate-950',
-    headerBg:      'bg-white/90 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/60',
+    pageBg:        'bg-gradient-to-br from-indigo-50/70 via-sky-50/50 to-violet-50/70 dark:from-slate-950 dark:via-slate-950 dark:to-slate-900',
+    headerBg:      'bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-indigo-100/60 dark:border-slate-800',
     titleGradient: 'from-indigo-600 to-violet-600 dark:from-indigo-400 dark:to-violet-400',
     dotGradient:   'from-indigo-500 to-violet-600',
     dotShadow:     'shadow-indigo-400/40',
     cards: {
-      prices:  'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)]',
-      news:    'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)]',
-      insight: 'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)]',
-      meme:    'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)]',
+      prices:  'bg-gradient-to-br from-indigo-50 to-blue-100/90 border border-indigo-100/80 shadow-[0_8px_32px_rgba(99,102,241,0.18)] dark:from-indigo-950/60 dark:to-blue-950/40 dark:border-indigo-900/50 dark:shadow-[0_8px_32px_rgba(99,102,241,0.25)]',
+      news:    'bg-gradient-to-br from-sky-50 to-cyan-100/90 border border-sky-100/80 shadow-[0_8px_32px_rgba(14,165,233,0.18)] dark:from-sky-950/60 dark:to-cyan-950/40 dark:border-sky-900/50 dark:shadow-[0_8px_32px_rgba(14,165,233,0.25)]',
+      insight: 'bg-gradient-to-br from-violet-50 to-purple-100/90 border border-violet-100/80 shadow-[0_8px_32px_rgba(139,92,246,0.18)] dark:from-violet-950/60 dark:to-purple-950/40 dark:border-violet-900/50 dark:shadow-[0_8px_32px_rgba(139,92,246,0.25)]',
+      meme:    'bg-gradient-to-br from-emerald-50 to-teal-100/90 border border-emerald-100/80 shadow-[0_8px_32px_rgba(16,185,129,0.18)] dark:from-emerald-950/60 dark:to-teal-950/40 dark:border-emerald-900/50 dark:shadow-[0_8px_32px_rgba(16,185,129,0.25)]',
     },
   },
   neon: {
