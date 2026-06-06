@@ -1,17 +1,17 @@
-const DEFAULT_CARD_BG = 'bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-sm dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)]'
+const DEFAULT_CARD_BG = 'bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm'
 
 const CARD_CONTROL_BTN = `p-1 rounded-md
   text-slate-400 dark:text-slate-500
-  hover:text-indigo-600 dark:hover:text-indigo-400
-  hover:bg-indigo-50 dark:hover:bg-indigo-950/30
+  hover:text-teal-600 dark:hover:text-teal-400
+  hover:bg-teal-50 dark:hover:bg-teal-950/30
   transition-colors duration-150`
 
 export function Card({ title, actions, children, bg = DEFAULT_CARD_BG, handle, onToggleSize, isFullWidth, onToggleCollapse, isCollapsed }) {
   return (
-    <div className={`flex flex-col rounded-2xl ${bg} p-6 ${isCollapsed ? 'gap-0' : 'gap-5'}`}>
+    <div className={`flex flex-col rounded-xl ${bg} p-5 ${isCollapsed ? 'gap-0' : 'gap-4'}`}>
       <div className="flex items-center gap-2 min-h-[1.25rem]">
         {handle}
-        <h2 className="flex-1 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
+        <h2 className="flex-1 text-[0.65rem] font-semibold uppercase tracking-[0.12em] text-slate-400 dark:text-slate-500">
           {title}
         </h2>
         <div className="flex items-center gap-0.5">
@@ -48,8 +48,8 @@ export function GripHandle(props) {
       {...props}
       className="p-1 rounded-md cursor-grab active:cursor-grabbing shrink-0
                  text-slate-300 dark:text-slate-600
-                 hover:text-indigo-500 dark:hover:text-indigo-400
-                 hover:bg-indigo-50 dark:hover:bg-indigo-950/30
+                 hover:text-teal-500 dark:hover:text-teal-400
+                 hover:bg-teal-50 dark:hover:bg-teal-950/30
                  transition-colors duration-150"
     >
       <svg viewBox="0 0 16 16" className="w-3.5 h-3.5" fill="currentColor">
@@ -88,14 +88,14 @@ export function ThumbsVote({ vote, onVote }) {
       <VoteButton
         label="Helpful"
         active={vote === 'up'}
-        activeClass="text-indigo-600 dark:text-indigo-400 bg-indigo-100 dark:bg-indigo-500/20 border border-indigo-200 dark:border-indigo-500/30 shadow-sm"
+        activeClass="text-teal-600 dark:text-teal-400 bg-teal-50 dark:bg-teal-500/15 border border-teal-200 dark:border-teal-500/30 shadow-sm"
         onClick={() => onVote('up')}
         icon={<ThumbUpIcon />}
       />
       <VoteButton
         label="Not helpful"
         active={vote === 'down'}
-        activeClass="text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-500/20 border border-red-200 dark:border-red-500/30 shadow-sm"
+        activeClass="text-red-500 dark:text-red-400 bg-red-50 dark:bg-red-500/15 border border-red-200 dark:border-red-500/30 shadow-sm"
         onClick={() => onVote('down')}
         icon={<ThumbDownIcon />}
       />
@@ -112,7 +112,7 @@ function VoteButton({ label, active, activeClass, onClick, icon }) {
       className={`p-1.5 rounded-lg border transition-all duration-150
         ${active
           ? activeClass
-          : 'border-transparent text-slate-400 dark:text-slate-600 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/30'
+          : 'border-transparent text-slate-300 dark:text-slate-600 hover:text-teal-600 dark:hover:text-teal-400 hover:bg-teal-50 dark:hover:bg-teal-950/30'
         }`}
     >
       {icon}
@@ -124,7 +124,7 @@ function ThumbUpIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
       stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"
-      className="w-4 h-4">
+      className="w-3.5 h-3.5">
       <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z" />
       <path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
     </svg>
@@ -135,7 +135,7 @@ function ThumbDownIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
       stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"
-      className="w-4 h-4">
+      className="w-3.5 h-3.5">
       <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3H10z" />
       <path d="M17 2h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17" />
     </svg>
@@ -159,32 +159,25 @@ export function ThemeToggle({ isDark, onToggle }) {
   )
 }
 
-const CATEGORY_BADGE_STYLES = {
-  bull_market:  'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400',
-  bear_market:  'bg-red-100    dark:bg-red-900/30     text-red-700    dark:text-red-400',
-  animal_coins: 'bg-amber-100  dark:bg-amber-900/30   text-amber-700  dark:text-amber-400',
-  general:      'bg-indigo-100 dark:bg-indigo-900/30  text-indigo-700 dark:text-indigo-400',
-}
-
-const CATEGORY_LABELS = {
-  bull_market:  'Bull Market',
-  bear_market:  'Bear Market',
-  animal_coins: 'Animal Coins',
-  general:      'General',
-}
-
 export function CategoryBadge({ category }) {
-  const styleClass = CATEGORY_BADGE_STYLES[category] ?? CATEGORY_BADGE_STYLES.general
-  const label      = CATEGORY_LABELS[category]        ?? 'General'
+  const styles = {
+    bull_market:  'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400',
+    bear_market:  'bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400',
+    animal_coins: 'bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-400',
+    general:      'bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400',
+  }
+  const labels = {
+    bull_market: 'Bull', bear_market: 'Bear', animal_coins: 'Animal', general: 'General',
+  }
   return (
-    <span className={`inline-block px-2 py-0.5 rounded-full text-[0.6rem] font-bold uppercase tracking-wider ${styleClass}`}>
-      {label}
+    <span className={`inline-block px-2 py-0.5 rounded-md text-[0.6rem] font-semibold uppercase tracking-wide ${styles[category] ?? styles.general}`}>
+      {labels[category] ?? 'General'}
     </span>
   )
 }
 
 export function SkeletonLine({ className = '' }) {
-  return <div className={`h-3 rounded-full bg-slate-100 dark:bg-slate-800 animate-pulse ${className}`} />
+  return <div className={`h-2.5 rounded-full bg-slate-100 dark:bg-slate-800 animate-pulse ${className}`} />
 }
 
 export function SkeletonCoinList({ count = 8 }) {
@@ -207,10 +200,10 @@ export function SkeletonNewsList({ count = 4 }) {
   return (
     <div className="flex flex-col gap-4">
       {Array.from({ length: count }, (_, i) => (
-        <div key={i} className="flex flex-col gap-1.5">
+        <div key={i} className="flex flex-col gap-2">
           <SkeletonLine className="w-full" />
           <SkeletonLine className="w-4/5" />
-          <SkeletonLine className="w-24" />
+          <SkeletonLine className="w-20" />
         </div>
       ))}
     </div>

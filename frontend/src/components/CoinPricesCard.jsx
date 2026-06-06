@@ -45,7 +45,7 @@ function CoinRow({ coin, isFavourited, onToggleFavourite }) {
                   transition-colors duration-100
                   ${isFavourited
                     ? 'bg-amber-50/60 dark:bg-amber-950/20'
-                    : 'hover:bg-indigo-50/70 dark:hover:bg-slate-800/60'
+                    : 'hover:bg-teal-50/60 dark:hover:bg-slate-800/60'
                   }`}
     >
       <div className="flex items-center gap-3">

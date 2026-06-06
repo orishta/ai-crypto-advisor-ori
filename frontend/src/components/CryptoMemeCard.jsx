@@ -21,11 +21,10 @@ function RefreshMemeButton({ onRefresh }) {
   return (
     <button
       onClick={onRefresh}
-      className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold
-                 bg-gradient-to-r from-violet-500 to-indigo-500
-                 hover:from-violet-600 hover:to-indigo-600
-                 text-white shadow-sm shadow-violet-400/30
-                 transition-all duration-200"
+      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold
+                 bg-teal-600 hover:bg-teal-700
+                 text-white shadow-sm
+                 transition-colors duration-150"
     >
       <RefreshIcon />
       New Meme

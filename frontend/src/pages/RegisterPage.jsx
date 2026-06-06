@@ -13,6 +13,28 @@ function extractError(err, fallback) {
   return typeof detail === 'string' ? detail : fallback
 }
 
+function InputField({ label, type, value, onChange, autoComplete }) {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <label className="text-xs font-semibold text-slate-500 dark:text-slate-400">{label}</label>
+      <input
+        type={type}
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        autoComplete={autoComplete}
+        required
+        className="w-full px-3.5 py-2.5 text-sm rounded-lg border
+                   border-slate-200 dark:border-slate-700
+                   bg-white dark:bg-slate-800/60
+                   text-slate-900 dark:text-slate-100
+                   focus:outline-none focus:ring-2 focus:ring-teal-500/25 focus:border-teal-500
+                   dark:focus:border-teal-500
+                   transition-colors duration-150"
+      />
+    </div>
+  )
+}
+
 export default function RegisterPage() {
   const { login }               = useAuth()
   const navigate                = useNavigate()
@@ -22,10 +44,7 @@ export default function RegisterPage() {
   const [submitting, setSubmitting] = useState(false)
 
   function set(field) {
-    return v => {
-      setError('')
-      setForm(prev => ({ ...prev, [field]: v }))
-    }
+    return v => { setError(''); setForm(prev => ({ ...prev, [field]: v })) }
   }
 
   async function handleSubmit(e) {
@@ -46,52 +65,45 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
       <header className="flex items-center justify-between px-8 py-5">
-        <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-indigo-600 dark:bg-indigo-400 shrink-0" />
-          <span className="text-sm font-semibold tracking-tight text-slate-800 dark:text-slate-200">
-            AI Crypto Advisor
-          </span>
+        <div className="flex items-center gap-2.5">
+          <div className="w-6 h-6 rounded-md bg-teal-600 flex items-center justify-center">
+            <TrendIcon />
+          </div>
+          <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">AI Crypto Advisor</span>
         </div>
         <ThemeToggle isDark={isDark} onToggle={toggleTheme} />
       </header>
 
-      <main className="flex-1 flex items-center justify-center px-6 py-16">
-        <div className="w-full max-w-sm">
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8
-                          shadow-[0_4px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_40px_rgba(0,0,0,0.45)]">
+      <main className="flex-1 flex items-center justify-center px-6 py-12">
+        <div className="w-full max-w-[360px]">
+          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-8
+                          shadow-[0_4px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_40px_rgba(0,0,0,0.4)]">
             <div className="mb-7">
-              <p className="text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-indigo-600 dark:text-indigo-400 mb-2">
+              <p className="text-[0.65rem] font-semibold uppercase tracking-widest text-teal-600 dark:text-teal-400 mb-2">
                 Get started
               </p>
-              <h1 className="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
-                Create account
-              </h1>
+              <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100">Create your account</h1>
             </div>
 
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <InputField label="Name"     type="text"     value={form.name}     onChange={set('name')}     autoComplete="name" />
-              <InputField label="Email"    type="email"    value={form.email}    onChange={set('email')}    autoComplete="email" />
-              <InputField label="Password" type="password" value={form.password} onChange={set('password')} autoComplete="new-password" />
+              <InputField label="Full name"      type="text"     value={form.name}     onChange={set('name')}     autoComplete="name" />
+              <InputField label="Email address"  type="email"    value={form.email}    onChange={set('email')}    autoComplete="email" />
+              <InputField label="Password"       type="password" value={form.password} onChange={set('password')} autoComplete="new-password" />
 
-              {error && (
-                <p className="text-xs text-red-500 dark:text-red-400 leading-relaxed">{error}</p>
-              )}
+              {error && <p className="text-xs text-red-500 dark:text-red-400">{error}</p>}
 
-              <button
-                type="submit"
-                disabled={submitting}
-                className="mt-1 w-full py-3.5 text-sm font-semibold rounded-xl
-                           bg-indigo-600 text-white hover:bg-indigo-700
+              <button type="submit" disabled={submitting}
+                className="mt-1 w-full py-3 text-sm font-semibold rounded-lg
+                           bg-teal-600 text-white hover:bg-teal-700
                            disabled:opacity-60 disabled:cursor-not-allowed
-                           transition-colors duration-200 shadow-sm"
-              >
+                           transition-colors duration-150 shadow-sm">
                 {submitting ? 'Creating account…' : 'Create account'}
               </button>
             </form>
 
             <p className="mt-6 text-center text-sm text-slate-500 dark:text-slate-400">
               Already have an account?{' '}
-              <Link to="/login" className="text-indigo-600 dark:text-indigo-400 font-medium hover:underline">
+              <Link to="/login" className="font-semibold text-teal-600 dark:text-teal-400 hover:underline">
                 Sign in
               </Link>
             </p>
@@ -102,27 +114,12 @@ export default function RegisterPage() {
   )
 }
 
-function InputField({ label, type, value, onChange, autoComplete }) {
+function TrendIcon() {
   return (
-    <div className="flex flex-col gap-1.5">
-      <label className="text-[0.65rem] font-semibold uppercase tracking-[0.1em] text-slate-400 dark:text-slate-500">
-        {label}
-      </label>
-      <input
-        type={type}
-        value={value}
-        onChange={e => onChange(e.target.value)}
-        autoComplete={autoComplete}
-        required
-        className="w-full px-3.5 py-2.5 text-sm rounded-xl border
-                   border-slate-200 dark:border-slate-700
-                   bg-slate-50 dark:bg-slate-800/60
-                   text-slate-900 dark:text-slate-100
-                   placeholder:text-slate-300 dark:placeholder:text-slate-600
-                   focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-indigo-500
-                   dark:focus:border-indigo-500
-                   transition-colors duration-150"
-      />
-    </div>
+    <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 text-white" fill="none"
+      stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="1 10 5 6 9 8 15 3" />
+      <polyline points="11 3 15 3 15 7" />
+    </svg>
   )
 }

@@ -81,7 +81,7 @@ export default function AIInsightCard({ votesMap = {}, bg, handle, onToggleSize,
           <ErrorNote>{error}</ErrorNote>
           <button
             onClick={fetchInsight}
-            className="self-start text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
+            className="self-start text-xs font-semibold text-teal-600 dark:text-teal-400 hover:underline"
           >
             Try again
           </button>
@@ -89,7 +89,7 @@ export default function AIInsightCard({ votesMap = {}, bg, handle, onToggleSize,
       )}
       {!loading && !error && insight && (
         <div className="flex flex-col gap-2.5">
-          <p className="text-[0.6rem] font-semibold uppercase tracking-[0.12em] text-indigo-500 dark:text-indigo-400">
+          <p className="text-[0.6rem] font-semibold uppercase tracking-[0.12em] text-teal-600 dark:text-teal-400">
             AI-generated · Updated daily
           </p>
           <p className="text-sm text-slate-800 dark:text-slate-200 leading-relaxed">{insight}</p>
