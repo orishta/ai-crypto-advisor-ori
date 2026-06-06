@@ -40,6 +40,14 @@ _INSIGHT_PROMPT = (
     "Be specific, engaging, and avoid generic advice."
 )
 
+_INSIGHT_FALLBACK = [
+    "Bitcoin continues to dominate market sentiment as institutional adoption accelerates — watch for key resistance levels before adding to positions.",
+    "Ethereum's Layer-2 ecosystem is quietly absorbing retail activity while the mainnet handles institutional settlements — a structural shift worth tracking.",
+    "Altcoin season signals are mixed: strong BTC dominance suppresses alts short-term, but select Layer-1s show accumulation patterns on low timeframes.",
+    "Macro uncertainty is keeping crypto correlated with risk assets — until that decouples, position sizing and stop-losses matter more than entry price.",
+    "DeFi TVL is recovering steadily after months of outflows; early-stage protocols with real yield are attracting patient capital again.",
+]
+
 _NEWS_FALLBACK = [
     {"title": "Bitcoin Surges Past $65,000 as Institutional Demand Picks Up",        "source": "CoinDesk",  "date": "2025-06-03"},
     {"title": "Ethereum Layer-2 Networks Record $12B in Total Value Locked",          "source": "The Block", "date": "2025-06-02"},
@@ -154,25 +162,31 @@ def get_market_data():
 
 @router.get("/insight")
 def get_daily_insight():
-    if not os.getenv("OPENROUTER_API_KEY"):
-        raise HTTPException(status_code=500, detail="OPENROUTER_API_KEY is not configured")
+    api_key = os.getenv("OPENROUTER_API_KEY")
+    if not api_key:
+        return {"insight": random.choice(_INSIGHT_FALLBACK), "source": "fallback"}
 
     try:
         resp = requests.post(
             _OPENROUTER_URL,
-            headers={"Authorization": f"Bearer {os.getenv('OPENROUTER_API_KEY')}", "Content-Type": "application/json"},
+            headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
             json={"model": _OPENROUTER_MODEL, "messages": [{"role": "user", "content": _INSIGHT_PROMPT}]},
             timeout=20,
         )
     except requests.Timeout:
-        raise HTTPException(status_code=504, detail="OpenRouter request timed out")
+        return {"insight": random.choice(_INSIGHT_FALLBACK), "source": "fallback"}
 
-    if resp.status_code == 429:
-        raise HTTPException(status_code=429, detail="AI provider rate limit reached — try again in a moment")
+    if resp.status_code in (429, 503):
+        return {"insight": random.choice(_INSIGHT_FALLBACK), "source": "fallback"}
+
     if resp.status_code != 200:
         raise HTTPException(status_code=502, detail=f"OpenRouter returned {resp.status_code}")
 
-    return {"insight": resp.json()["choices"][0]["message"]["content"].strip()}
+    try:
+        text = resp.json()["choices"][0]["message"]["content"].strip()
+        return {"insight": text, "source": "ai"}
+    except (KeyError, IndexError):
+        return {"insight": random.choice(_INSIGHT_FALLBACK), "source": "fallback"}
 
 
 @router.get("/news")
