@@ -1,37 +1,7 @@
 import { useState } from 'react'
 import client from '../api/client'
-
-function extractError(err, fallback) {
-  const detail = err.response?.data?.detail
-  if (Array.isArray(detail)) {
-    return detail.map(d => d.msg?.replace(/^Value error,\s*/i, '')).join(' · ')
-  }
-  return typeof detail === 'string' ? detail : fallback
-}
-
-function InputField({ label, type, value, onChange, autoComplete }) {
-  return (
-    <div className="flex flex-col gap-1.5">
-      <label className="text-xs font-semibold text-slate-500 dark:text-slate-400">
-        {label}
-      </label>
-      <input
-        type={type}
-        value={value}
-        onChange={e => onChange(e.target.value)}
-        autoComplete={autoComplete}
-        required
-        className="w-full px-3.5 py-2.5 text-sm rounded-lg border
-                   border-slate-200 dark:border-slate-700
-                   bg-white dark:bg-slate-800/60
-                   text-slate-900 dark:text-slate-100
-                   focus:outline-none focus:ring-2 focus:ring-teal-500/25 focus:border-teal-500
-                   dark:focus:border-teal-500
-                   transition-colors duration-150"
-      />
-    </div>
-  )
-}
+import { InputField } from './ui'
+import { extractError } from '../utils/errorUtils'
 
 export default function ForgotPasswordModal({ onClose }) {
   const [form, setForm]     = useState({ email: '', new_password: '' })

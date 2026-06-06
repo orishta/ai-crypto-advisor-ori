@@ -223,3 +223,67 @@ export function SkeletonParagraph() {
 export function ErrorNote({ children }) {
   return <p className="text-xs text-red-500 dark:text-red-400 leading-relaxed">{children}</p>
 }
+
+// ─── Shared auth-page primitives ──────────────────────────────────────────────
+
+export function InputField({ label, type, value, onChange, autoComplete }) {
+  return (
+    <div className="flex flex-col gap-1.5">
+      <label className="text-xs font-semibold text-slate-500 dark:text-slate-400">{label}</label>
+      <input
+        type={type}
+        value={value}
+        onChange={e => onChange(e.target.value)}
+        autoComplete={autoComplete}
+        required
+        className="w-full px-3.5 py-2.5 text-sm rounded-lg border
+                   border-slate-200 dark:border-slate-700
+                   bg-white dark:bg-slate-800/60
+                   text-slate-900 dark:text-slate-100
+                   focus:outline-none focus:ring-2 focus:ring-teal-500/25 focus:border-teal-500
+                   dark:focus:border-teal-500
+                   transition-colors duration-150"
+      />
+    </div>
+  )
+}
+
+export function TrendIcon() {
+  return (
+    <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 text-white" fill="none"
+      stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="1 10 5 6 9 8 15 3" />
+      <polyline points="11 3 15 3 15 7" />
+    </svg>
+  )
+}
+
+export function AuthHeader({ isDark, onToggle }) {
+  return (
+    <header className="flex items-center justify-between px-8 py-5 shrink-0">
+      <div className="flex items-center gap-2.5">
+        <div className="w-6 h-6 rounded-md bg-teal-600 flex items-center justify-center">
+          <TrendIcon />
+        </div>
+        <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">AI Crypto Advisor</span>
+      </div>
+      <ThemeToggle isDark={isDark} onToggle={onToggle} />
+    </header>
+  )
+}
+
+export function AuthPageLayout({ isDark, onToggle, maxWidth = '360px', children }) {
+  return (
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 transition-colors duration-300">
+      <AuthHeader isDark={isDark} onToggle={onToggle} />
+      <main className="flex-1 flex items-center justify-center px-6 py-12">
+        <div style={{ maxWidth }} className="w-full">
+          <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-8
+                          shadow-[0_4px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_40px_rgba(0,0,0,0.4)]">
+            {children}
+          </div>
+        </div>
+      </main>
+    </div>
+  )
+}
