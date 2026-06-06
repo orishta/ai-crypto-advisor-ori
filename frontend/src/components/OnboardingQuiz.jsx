@@ -10,7 +10,7 @@ const INVESTOR_TYPES = [
 
 const CONTENT_TYPES = [
   { key: 'News',     label: 'News'     },
-  { key: 'Insights', label: 'Insights' },
+  { key: 'Insights', label: 'AI Insights' },
   { key: 'Memes',    label: 'Memes'    },
 ]
 
