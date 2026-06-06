@@ -23,6 +23,7 @@ Once I had the structure in my head, I used Claude to help me write boilerplate 
 - The Reddit meme API (`meme-api.com`) sometimes returns `.mp4` URLs without setting the `isVideo` flag. AI's first version only checked the flag, so videos were being passed as images and breaking the image tag. I noticed this in testing, traced it to the API response, and added the `.endswith(".mp4")` check myself.
 - The OpenRouter free-tier model ID — AI suggested model names that no longer exist on the free tier. I went to the OpenRouter docs, found the current free model, and updated the config.
 - Several CORS issues between Vite dev server (port 5173) and FastAPI (port 8000) that required reading the FastAPI CORS middleware docs to fix correctly.
+- OpenRouter connection 
 
 ### What AI helped with
 
