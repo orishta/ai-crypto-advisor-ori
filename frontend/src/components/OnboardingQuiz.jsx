@@ -9,9 +9,9 @@ const INVESTOR_TYPES = [
 ]
 
 const CONTENT_TYPES = [
-  { key: 'News',     label: 'News',     icon: '📰' },
-  { key: 'Insights', label: 'Insights', icon: '✦'  },
-  { key: 'Memes',    label: 'Memes',    icon: '😂'  },
+  { key: 'News',     label: 'News'     },
+  { key: 'Insights', label: 'Insights' },
+  { key: 'Memes',    label: 'Memes'    },
 ]
 
 function CheckIcon() {
@@ -157,7 +157,7 @@ export default function OnboardingQuiz({ onComplete, isDark, onToggleTheme }) {
                   </span>
                 </div>
                 <div className="grid grid-cols-3 gap-2">
-                  {CONTENT_TYPES.map(({ key, label, icon }) => {
+                  {CONTENT_TYPES.map(({ key, label }) => {
                     const selected = contentTypes.includes(key)
                     return (
                       <button
@@ -165,7 +165,7 @@ export default function OnboardingQuiz({ onComplete, isDark, onToggleTheme }) {
                         type="button"
                         onClick={() => toggleContentType(key)}
                         aria-pressed={selected}
-                        className={`relative flex flex-col items-center gap-2 py-4 rounded-xl border
+                        className={`relative flex items-center justify-center gap-2 py-3.5 rounded-xl border
                                     transition-all duration-150
                                     ${selected
                                       ? 'bg-indigo-600 border-indigo-600 text-white shadow-sm'
@@ -173,11 +173,8 @@ export default function OnboardingQuiz({ onComplete, isDark, onToggleTheme }) {
                                     }`}
                       >
                         {selected && (
-                          <span className="absolute top-2 right-2 text-indigo-200">
-                            <CheckIcon />
-                          </span>
+                          <span className="text-indigo-200"><CheckIcon /></span>
                         )}
-                        <span className="text-lg leading-none">{icon}</span>
                         <span className="text-xs font-semibold">{label}</span>
                       </button>
                     )

@@ -88,7 +88,12 @@ export default function AIInsightCard({ votesMap = {}, bg, handle, onToggleSize,
         </div>
       )}
       {!loading && !error && insight && (
-        <p className="text-sm text-slate-800 dark:text-slate-200 leading-relaxed">{insight}</p>
+        <div className="flex flex-col gap-2.5">
+          <p className="text-[0.6rem] font-semibold uppercase tracking-[0.12em] text-indigo-500 dark:text-indigo-400">
+            AI-generated · Updated daily
+          </p>
+          <p className="text-sm text-slate-800 dark:text-slate-200 leading-relaxed">{insight}</p>
+        </div>
       )}
     </Card>
   )
