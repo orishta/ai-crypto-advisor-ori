@@ -2,7 +2,7 @@
 
 ## Why ML?
 
-I am currently taking a Machine Learning course at university, so I wanted to apply what I learned in a real project rather than just in homework exercises. The idea of a personalized content feed felt like a natural fit — recommendation engines are one of the core applications we studied, and building one here let me think concretely about the theory (user vectors, similarity scoring, iterative refinement) instead of just abstractly.
+I am currently taking a Machine Learning course at my studies, so I wanted to apply what I learned in a real project rather than just in homework exercises. The idea of a personalized content feed felt like a natural fit — recommendation engines are one of the core applications we studied, and building one here let me think concretely about the theory (user vectors, similarity scoring, iterative refinement) instead of just abstractly.
 
 ## The Concept
 
