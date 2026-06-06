@@ -15,7 +15,7 @@ export default function DashboardPage() {
     client.get('/votes')
       .then(({ data }) => {
         const map = {}
-        data.votes.forEach(v => { map[`${v.content_type}_${v.content_key}`] = v.value })
+        data.votes.forEach(v => { map[v.content_key] = v.value })
         setVotesMap(map)
       })
       .catch(() => {})

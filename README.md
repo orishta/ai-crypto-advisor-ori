@@ -77,4 +77,4 @@ flowchart TD
 Environment variables set at the platform level (never in the repo):
 - `DATABASE_URL` — Neon PostgreSQL connection string (set in Railway)
 - `OPENROUTER_API_KEY` — AI provider key (set in Railway)
-- `VITE_API_URL` — Railway backend URL (set in Vercel)
+- `VITE_BACKEND_URL` — Railway backend URL (set in Vercel)

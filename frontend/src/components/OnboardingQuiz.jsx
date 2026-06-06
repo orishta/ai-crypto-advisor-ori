@@ -4,8 +4,9 @@ import { ThemeToggle } from './ui'
 const COINS = ['BTC', 'ETH', 'SOL', 'BNB', 'ADA', 'XRP', 'DOGE', 'AVAX']
 
 const INVESTOR_TYPES = [
-  { key: 'HODLer',     label: 'HODLer',     desc: 'Long-term holder' },
-  { key: 'Day Trader', label: 'Day Trader',  desc: 'Short-term moves' },
+  { key: 'HODLer',        label: 'HODLer',        desc: 'Long-term holder'     },
+  { key: 'Day Trader',    label: 'Day Trader',     desc: 'Short-term moves'     },
+  { key: 'NFT Collector', label: 'NFT Collector',  desc: 'Digital collectibles' },
 ]
 
 const CONTENT_TYPES = [
@@ -120,7 +121,7 @@ export default function OnboardingQuiz({ onComplete, isDark, onToggleTheme }) {
                 <legend className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-3">
                   What kind of investor are you?
                 </legend>
-                <div className="flex gap-3">
+                <div className="grid grid-cols-3 gap-2">
                   {INVESTOR_TYPES.map(({ key, label, desc }) => {
                     const selected = investorType === key
                     return (
