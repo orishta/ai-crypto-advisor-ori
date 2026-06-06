@@ -4,8 +4,6 @@ Throughout the development of this AI Crypto Advisor, I utilized AI (Claude/Gemi
 
 Below is a deep dive into my thought process and how AI was integrated into the development lifecycle:
 
-The Challenge: How do we store user feedback (thumbs up/down) in a way that is structured enough for ML algorithms (like Collaborative Filtering or Content-Based Filtering), yet flexible enough to handle different content types (Memes, News, Coins)?
-
 1. Product Discovery & Overcoming Domain Gaps
 
 Full Transparency: I do not come from the crypto space, and my initial knowledge of this domain was minimal. This is exactly why my first step was not opening the IDE, but rather initiating a deep-dive product discovery session to understand the target users and their pain points.
